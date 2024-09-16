@@ -1,0 +1,491 @@
+/* Général */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#date-jour {
+    text-align: center;
+    font-size: 1.2em;
+    margin: 20px 0;
+}
+
+/* Formulaire de tâches */
+/* Formulaire de tâches */
+#task-form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center; /* Aligner les éléments au centre verticalement */
+    margin-bottom: 10px; /* Espacement entre les lignes du formulaire */
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 8px; /* Espacement entre la case à cocher et l'étiquette */
+}
+
+.checkbox-group label {
+    margin: 0; /* Réinitialiser la marge pour les labels */
+    font-size: 16px; /* Ajuster la taille de la police si nécessaire */
+}
+
+/* Assurer que tous les autres éléments du formulaire soient alignés correctement */
+#task-form input, #task-form select, #task-form button {
+    display: block;
+    width: calc(100% - 22px);
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+
+#task-form .form-group {
+    display: flex;
+    align-items: center; /* Aligner verticalement au centre */
+    margin-bottom: 10px; /* Espacement entre les lignes du formulaire */
+}
+
+#task-form label {
+    margin-left: 5px; /* Espace entre la case à cocher et l'étiquette */
+}
+
+#task-form button {
+    width: 100%;
+    background: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.menu-tasks {
+    min-height: 100vh; /* occupe toute la hauteur de l'écran */
+}
+
+#task-form button:hover {
+    background: #4cae4c;
+}
+
+/* Liste des tâches */
+#task-list, #priority-task-list {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0;
+    list-style-type: none;
+}
+
+.task-item {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+}
+
+.task-item p {
+    margin: 5px 0;
+}
+
+.task-item button {
+    background: #d9534f;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.task-item button:hover {
+    background: #c9302c;
+}
+
+.task-item .edit-button {
+    background: #5bc0de;
+}
+
+.task-item .edit-button:hover {
+    background: #31b0d5;
+}
+
+/* Menu */
+.menu {
+    background: #333;
+    color: white;
+    padding: 10px 0;
+    position: relative;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.menu li {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.menu li:hover {
+    background: #444;
+}
+
+/* Menu hamburger */
+.hamburger-menu {
+    display: none;
+    cursor: pointer;
+}
+
+/* Calendrier */
+#calendar {
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 0 10px; /* Ajouter un peu de padding horizontal */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hamburger-menu {
+        display: block;
+    }
+
+    .menu ul {
+        display: none;
+        flex-direction: column;
+    }
+
+    .menu ul.active {
+        display: flex;
+    }
+
+    .menu li {
+        padding: 15px;
+        text-align: center;
+    }
+}
+
+/* Style pour la barre d'outils */
+.fc-toolbar {
+    display: flex;
+    justify-content: space-between; /* Équilibre les boutons entre gauche et droite */
+    flex-wrap: wrap; /* Permet aux éléments de passer sur plusieurs lignes si nécessaire */
+    margin-bottom: 15px; /* Ajoute un espace sous la barre */
+}
+
+.fc-toolbar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    flex: 1 1 100%; /* Le titre occupe 100% de la largeur sur les petits écrans */
+    margin-bottom: 10px;
+}
+
+/* Style pour les boutons */
+.fc-button {
+    background-color: #3A3D98;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.fc-button:hover {
+    background-color: #2B2D80; /* Changement de couleur au survol */
+}
+
+.fc-button:disabled {
+    background-color: #ccc; /* Couleur des boutons désactivés */
+    cursor: not-allowed;
+}
+
+/* Style pour les boutons précédent/suivant */
+.fc-prev-button, .fc-next-button {
+    background-color: #FF5E5B;
+    margin: 0 5px; /* Espacement entre les boutons */
+}
+
+.fc-prev-button:hover, .fc-next-button:hover {
+    background-color: #D74C4B; /* Changement de couleur au survol */
+}
+
+/* Responsivité pour les petits écrans */
+@media (max-width: 768px) {
+    .fc-toolbar {
+        flex-direction: column; /* Empile les boutons et le titre verticalement sur mobile */
+        align-items: center;
+    }
+
+    .fc-toolbar-title {
+        font-size: 1.2rem; /* Taille plus petite pour mobile */
+    }
+
+    .fc-button {
+        width: 100%; /* Les boutons prennent toute la largeur sur mobile */
+        margin-bottom: 10px;
+    }
+
+    .fc-prev-button, .fc-next-button {
+        width: 48%; /* Les boutons précédent/suivant partagent l'espace horizontal */
+    }
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    position: fixed; /* Fixé en bas de l'écran */
+    bottom: 0;
+    width: 100%;
+    clear: both; /* Assure que le footer se place en dessous des autres éléments */
+    z-index: 100;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+footer a {
+    color: #5cb85c;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Assurer que le contenu ne soit pas caché par le footer */
+.content {
+    padding-bottom: 80px; /* Ajuster selon la hauteur du footer pour éviter que le contenu soit masqué */
+}
+
+/* Style pour la section d'accueil */
+#accueil {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    color: #333;
+    max-width: 1000px;
+    margin: 20px auto;
+}
+
+#accueil h3 {
+    font-size: 28px;
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+#accueil p {
+    font-size: 18px;
+    color: #666;
+    margin: 0 0 25px 0;
+    line-height: 1.6;
+}
+
+#accueil ul {
+    list-style-type: disc;
+    margin-left: 25px;
+    padding-left: 0;
+}
+
+#accueil ul li {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 12px;
+    line-height: 1.8;
+}
+
+#accueil h4 {
+    font-size: 22px;
+    color: #007bff;
+    margin: 25px 0 15px 0;
+    font-weight: 600;
+}
+
+#accueil ul li strong {
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    #accueil {
+        padding: 20px;
+    }
+
+    #accueil h3 {
+        font-size: 24px;
+    }
+
+    #accueil p, #accueil ul li, #accueil h4 {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    #accueil {
+        padding: 15px;
+    }
+
+    #accueil h3 {
+        font-size: 20px;
+    }
+
+    #accueil p, #accueil ul li, #accueil h4 {
+        font-size: 14px;
+    }
+
+    #accueil ul {
+        margin-left: 15px;
+    }
+}
+
+/* Style pour la section d'accueil */
+#accueil {
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    color: #333;
+    max-width: 900px;
+    margin: 30px auto;
+}
+
+#accueil h3 {
+    font-size: 28px;
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+#accueil p {
+    font-size: 18px;
+    color: #666;
+    margin: 0 0 25px 0;
+    line-height: 1.6;
+}
+
+#accueil ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 20px;
+}
+
+#accueil ul li {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+#accueil h4 {
+    font-size: 22px;
+    color: #007bff;
+    margin: 25px 0 15px 0;
+    font-weight: 600;
+}
+
+#accueil ul li strong {
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    #accueil {
+        padding: 20px;
+    }
+
+    #accueil h3 {
+        font-size: 24px;
+    }
+
+    #accueil p, #accueil ul li, #accueil h4 {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    #accueil {
+        padding: 15px;
+    }
+
+    #accueil h3 {
+        font-size: 22px;
+    }
+
+    #accueil p, #accueil ul li, #accueil h4 {
+        font-size: 14px;
+    }
+}
+
+/* Style pour la section des paramètres de notification */
+.notification-settings {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.notification-settings label {
+    font-size: 16px;
+    color: #333;
+    margin-right: 10px;
+}
+
+.notification-settings input[type="checkbox"] {
+    margin-left: 5px;
+    transform: scale(1.2); /* Agrandir la taille du checkbox pour une meilleure visibilité */
+}
+
+/* Ajouter un peu de padding et de bordure pour les éléments du formulaire */
+form input[type="text"],
+form input[type="date"],
+form select,
+form button {
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+

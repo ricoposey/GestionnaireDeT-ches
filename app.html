@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <title>Application de gestion de tâches</title>
+    <link rel="stylesheet" href="app.css">
+
+    <style>
+        #accueil h3 {
+            color: #333;
+        }
+
+        #accueil p {
+            color: #666;
+        }
+
+        #accueil ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        #accueil ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="menu">
+            <button id="hamburger-menu" class="hamburger-menu">&#9776;</button>
+
+            <ul>
+                <li id="menu-item-aujourd-hui">Gestionnaire de tâche</li>
+                <li id="menu-item-prioritaire">Prioritaire</li>
+                <li id="menu-item-calendrier">Calendrier</li>
+                <li id="menu-item-liste">Liste</li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <h2 id="section-title" style="border: solid 2px black; text-align: center;">Bienvenue sur notre plateforme de gestion de tâches</h2>
+            <p>Date du jour: <span id="date-jour"></span></p>
+            
+            <form id="task-form">
+                <input type="hidden" id="task-id" value="">
+                <input type="text" id="new-task" placeholder="Nouvelle tâche" required>
+                <input type="date" id="due-date">
+                
+                <br>
+                <div class="checkbox-group">
+                    <label for="reminder">&nbsp;&nbsp;Rappel</label>
+                    <input type="checkbox" id="reminder">
+                </div>
+            
+                <br>
+                <div class="checkbox-group">
+                    <label for="repeat">&nbsp;&nbsp;Répéter</label>
+                    <input type="checkbox" id="repeat">
+                </div>
+                
+                <select id="category">
+                    <option value="">Catégorie</option>
+                    <option value="Travail">Travail</option>
+                    <option value="Personnel">Personnel</option>
+                    <option value="Etudes">Etudes</option>
+                    <option value="Ménage">Ménage</option>
+                </select>
+                
+                <select id="priority">
+                    <option value="">Priorité</option>
+                    <option value="Faible">Faible</option>
+                    <option value="Importante">Importante</option>
+                    <option value="high">Urgente</option>
+                </select>
+                
+                <button type="submit" id="add-task-button">Ajouter</button>
+                <button type="submit" id="update-task-button" style="display: none;">Mettre à jour</button>
+            </form>            
+
+            <!-- Section pour les paramètres de notification -->
+            <div class="notification-settings">
+                <label for="notification-sound">Activer le son pour les notifications</label>
+                <input type="checkbox" id="notification-sound" checked>
+            </div>
+
+            <!-- Section pour le Gestionnaire de tâche (anciennement Accueil) -->
+            <div id="accueil">
+                <p>Voici un aperçu des fonctionnalités disponibles :</p>
+
+                <h4>1. Gestionnaire de Tâches</h4>
+                <p>Dans cette section, vous pouvez ajouter, modifier, et supprimer vos tâches. Utilisez le formulaire pour entrer les détails de chaque tâche :</p>
+                <ul>
+                    <li><strong>Nouvelle Tâche :</strong> Entrez le nom de votre tâche dans le champ "Nouvelle tâche".</li>
+                    <li><strong>Date d'échéance :</strong> Sélectionnez la date à laquelle la tâche doit être complétée.</li>
+                    <li><strong>Rappel :</strong> Cochez cette case si vous souhaitez recevoir une notification pour cette tâche.</li>
+                    <li><strong>Répéter :</strong> Cochez cette case si vous souhaitez que la tâche se répète à intervalles réguliers.</li>
+                    <li><strong>Catégorie :</strong> Choisissez une catégorie pour organiser vos tâches (Travail, Personnel, Etudes, Ménage).</li>
+                    <li><strong>Priorité :</strong> Sélectionnez le niveau de priorité de la tâche (Faible, Importante, Urgente).</li>
+                    <li><strong>Ajouter :</strong> Cliquez sur "Ajouter" pour enregistrer la tâche.</li>
+                    <li><strong>Mettre à jour :</strong> Cliquez sur "Mettre à jour" pour modifier une tâche existante.</li>
+                </ul>
+
+                <h4>2. Liste des Tâches</h4>
+                <p>Cette section affiche toutes vos tâches. Vous pouvez voir les détails, les modifier ou les supprimer en utilisant les boutons correspondants.</p>
+
+                <h4>3. Tâches Prioritaires</h4>
+                <p>Affiche les tâches marquées comme "Urgentes". Cela vous permet de voir rapidement vos tâches les plus importantes.</p>
+
+                <h4>4. Calendrier</h4>
+                <p>Le calendrier vous permet de visualiser vos tâches en fonction de leurs dates d'échéance. Vous pouvez voir toutes vos tâches planifiées dans une vue mensuelle.</p>
+
+                <h4>Menu Hamburger</h4>
+                <p>Sur les petits écrans, utilisez le menu hamburger pour naviguer entre les différentes sections de l'application.</p>
+            </div>
+
+            <!-- Section pour afficher les tâches -->
+            <div id="task-list" style="display: none;">
+                <h3>Liste des Tâches</h3>
+                <!-- Les tâches seront ajoutées ici dynamiquement -->
+            </div>
+
+            <!-- Section pour afficher les tâches prioritaires -->
+            <div id="priority-task-list" style="display: none;">
+                <h3>Tâches Prioritaires</h3>
+                <!-- Les tâches prioritaires seront ajoutées ici dynamiquement -->
+            </div>
+
+            <!-- Conteneur pour le calendrier -->
+            <div id="calendar" style="display: none;">
+                <!-- Le calendrier FullCalendar sera rendu ici -->
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 Mon Application. Tous droits réservés.</p>
+                <div class="footer-links">
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Politique de confidentialité</a>
+                    <a href="mailto:ricardohounsa97@gmail.com">Contact</a>
+                    <a href="#" class="back-to-top">Haut de page</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
